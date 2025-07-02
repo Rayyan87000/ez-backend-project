@@ -1,148 +1,111 @@
 # ez-backend-project
 A FastAPI-based secure backend for file upload, listing, and download with token-based authentication
 
-🔐 FastAPI Secure File Upload Backend
-A secure backend system built using FastAPI that allows file uploading, listing, and encrypted downloading with token-based authentication and role-based access control.
+🔐 FastAPI Secure File Sharing Backend
+A secure file-sharing backend built with FastAPI featuring:
+
+User role-based access (ops and client)
+
+Token-based authentication
+
+Encrypted file download links
+
+Email verification for clients
 
 🚀 Features
-🧾 User Signup & Login with hashed passwords
+✅ User Signup & Login
+✅ Email Verification for Client Users
+✅ JWT-style Token Authentication via Authorization header
+✅ Upload .pptx, .docx, .xlsx (Only ops role)
+✅ List Files (Authenticated clients)
+✅ Encrypted File Download using base64 filename encoding
 
-🔐 Token-based Auth using Authorization headers
+🛠️ Technologies Used
+FastAPI – Web Framework
 
-🛡️ Role-based Access: Only ops users can upload
+Uvicorn – ASGI Server
 
-📁 Upload files (.pptx, .docx, .xlsx) securely
+Passlib – Secure password hashing
 
-📄 List uploaded files (authenticated users only)
+Pydantic – Data validation
 
-📥 Encrypted File Download using Base64 URL encoding
+Python Dotenv – Manage environment variables
 
-💻 Interactive Swagger UI with authorization support
+smtplib – Send email
 
-⚙️ Technologies Used
-FastAPI
+Base64 – Filename encryption for secure links
 
-Pydantic
-
-Passlib (bcrypt)
-
-Uvicorn
-
-Python 3.13+
-
-📂 API Endpoints
-Endpoint	Method	Description	Auth Required	Role
-/signup	POST	Register a new user	❌ No	—
-/login	POST	Get token by logging in	❌ No	—
-/upload	POST	Upload file (.pptx, .docx, .xlsx)	✅ Yes	ops
-/files	GET	List uploaded files	✅ Yes	all
-/download/{encoded}	GET	Download file using Base64 encoded name	✅ Yes	all
-
-🧪 Swagger UI + Token Auth
-Open: http://127.0.0.1:8000/docs
-
-Click the Authorize button (top-right)
-
-Enter your token:
-
-php-template
-Copy
-Edit
-Bearer <your-token>
-🛠️ How to Run This Project on Any Device
-✅ 1. Clone the Repo
+🔧 How to Run
+1. 📁 Clone the Repository
 bash
 Copy
 Edit
 git clone https://github.com/Rayyan87000/ez-backend-project.git
 cd ez-backend-project
-✅ 2. Create and Activate Virtual Environment (Windows)
+2. 🐍 Create Virtual Environment
 bash
 Copy
 Edit
 python -m venv venv
-venv\Scripts\activate
-Or on macOS/Linux:
-
-bash
-Copy
-Edit
-python3 -m venv venv
-source venv/bin/activate
-✅ 3. Install Requirements
-If you have a requirements.txt file, run:
-
+venv\Scripts\activate  # For Windows
+3. 📦 Install Requirements
 bash
 Copy
 Edit
 pip install -r requirements.txt
-If not, install manually:
+4. 📄 Configure .env File
+Create a .env file in the root directory with:
 
-bash
+ini
 Copy
 Edit
-pip install fastapi uvicorn python-multipart passlib[bcrypt]
-✅ 4. Run the Server
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your_email@gmail.com
+SMTP_PASS=your_app_password
+SMTP_SENDER=your_email@gmail.com
+🔐 Use Gmail App Password (not your actual password)
+
+🔌 Start the Server
 bash
 Copy
 Edit
 uvicorn main:app --reload
-Visit http://127.0.0.1:8000/docs
+Go to http://127.0.0.1:8000/docs for the Swagger UI.
 
-🔁 Sample Workflow
-✅ Signup
-json
-Copy
-Edit
-POST /signup
-{
-  "username": "rayyan123",
-  "password": "mypassword",
-  "role": "ops"
-}
-✅ Login
-json
-Copy
-Edit
-POST /login
-{
-  "username": "rayyan123",
-  "password": "mypassword",
-  "role": "ops"
-}
-Response:
+📂 API Endpoints
+Endpoint	Method	Role	Description
+/signup	POST	client	Register user and send email verification
+/verify?token=	GET	client	Verify email via token link
+/login	POST	both	Get token after login
+/upload	POST	ops only	Upload .pptx, .docx, .xlsx files
+/files	GET	authenticated	List all uploaded files
+/download/{encoded}	GET	authenticated	Download file from secure encoded URL
 
-json
-Copy
-Edit
-{
-  "message": "Login successful",
-  "token": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-}
-Use this token in the Authorize section or as a header:
-
-makefile
-Copy
-Edit
-Authorization: Bearer <token>
-✅ Download Link Generator (Python)
-Use this snippet to generate encrypted download links:
+📥 Example Secure Download Link
+After listing files, generate a link using:
 
 python
 Copy
 Edit
 import base64
+
 def generate_download_link(filename):
     encoded = base64.urlsafe_b64encode(filename.encode()).decode().rstrip("=")
     return f"http://127.0.0.1:8000/download/{encoded}"
-📦 Folder Structure
-bash
+👮 Authorization in Swagger
+Click "Authorize" in top right of Swagger.
+
+Paste token:
+
+nginx
 Copy
 Edit
-ez-backend-project/
-│
-├── main.py                # FastAPI app
-├── uploads/               # Folder for storing uploaded files
-├── venv/                  # Virtual environment (ignored in GitHub)
-└── README.md              # This file
+Bearer your-token-here
+💡 Notes
+You cannot log in or access file actions without email verification.
+
+Upload is restricted to .pptx, .docx, .xlsx only.
+
+Client users cannot upload files.
 
