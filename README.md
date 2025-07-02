@@ -1,56 +1,148 @@
 # ez-backend-project
 A FastAPI-based secure backend for file upload, listing, and download with token-based authentication
 
-# 🔐 FastAPI Secure File Upload Backend
+🔐 FastAPI Secure File Upload Backend
+A secure backend system built using FastAPI that allows file uploading, listing, and encrypted downloading with token-based authentication and role-based access control.
 
-This is a secure file upload and download backend built with **FastAPI**. It includes token-based authentication, user roles (`ops` and `client`), and file encryption features.
+🚀 Features
+🧾 User Signup & Login with hashed passwords
 
-## 🚀 Features
+🔐 Token-based Auth using Authorization headers
 
-- 🧾 **User Signup & Login** with hashed passwords
-- 🔐 **JWT-style Token Auth** using Authorization headers
-- 🛡️ **Role-based Access**: Only `ops` users can upload files
-- 📁 **Secure File Upload** (`.pptx`, `.docx`, `.xlsx`)
-- 📄 **List Uploaded Files** (authenticated users)
-- 📥 **Encrypted File Download** using Base64 URLs
+🛡️ Role-based Access: Only ops users can upload
 
-## 🔧 Technologies Used
+📁 Upload files (.pptx, .docx, .xlsx) securely
 
-- FastAPI
-- Pydantic
-- Passlib (bcrypt)
-- Uvicorn
-- Python 3.13+
+📄 List uploaded files (authenticated users only)
 
-## 📂 API Endpoints
+📥 Encrypted File Download using Base64 URL encoding
 
-### `/signup` `POST`
-Register a new user. Provide `username`, `password`, and `role`.
+💻 Interactive Swagger UI with authorization support
 
-### `/login` `POST`
-Login to receive a `token`. Use this token in the header:  
-`Authorization: Bearer <your-token>`
+⚙️ Technologies Used
+FastAPI
 
-### `/upload` `POST` (Protected)
-Upload `.pptx`, `.docx`, or `.xlsx` files.  
-🔒 Only accessible by `ops` users.
+Pydantic
 
-### `/files` `GET` (Protected)
-Returns list of uploaded files. Accessible by all authenticated users.
+Passlib (bcrypt)
 
-### `/download/{encoded_filename}` `GET` (Protected)
-Download a file securely using an encoded filename (Base64).
+Uvicorn
 
-## 🔐 Swagger UI with Token Auth
+Python 3.13+
 
-- Visit `http://127.0.0.1:8000/docs`
-- Click **Authorize** (top right)
-- Paste token in the format: `Bearer <your-token>`
+📂 API Endpoints
+Endpoint	Method	Description	Auth Required	Role
+/signup	POST	Register a new user	❌ No	—
+/login	POST	Get token by logging in	❌ No	—
+/upload	POST	Upload file (.pptx, .docx, .xlsx)	✅ Yes	ops
+/files	GET	List uploaded files	✅ Yes	all
+/download/{encoded}	GET	Download file using Base64 encoded name	✅ Yes	all
 
-## 🛠️ How to Run
+🧪 Swagger UI + Token Auth
+Open: http://127.0.0.1:8000/docs
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Rayyan87000/ez-backend-project.git
-   cd ez-backend-project
+Click the Authorize button (top-right)
+
+Enter your token:
+
+php-template
+Copy
+Edit
+Bearer <your-token>
+🛠️ How to Run This Project on Any Device
+✅ 1. Clone the Repo
+bash
+Copy
+Edit
+git clone https://github.com/Rayyan87000/ez-backend-project.git
+cd ez-backend-project
+✅ 2. Create and Activate Virtual Environment (Windows)
+bash
+Copy
+Edit
+python -m venv venv
+venv\Scripts\activate
+Or on macOS/Linux:
+
+bash
+Copy
+Edit
+python3 -m venv venv
+source venv/bin/activate
+✅ 3. Install Requirements
+If you have a requirements.txt file, run:
+
+bash
+Copy
+Edit
+pip install -r requirements.txt
+If not, install manually:
+
+bash
+Copy
+Edit
+pip install fastapi uvicorn python-multipart passlib[bcrypt]
+✅ 4. Run the Server
+bash
+Copy
+Edit
+uvicorn main:app --reload
+Visit http://127.0.0.1:8000/docs
+
+🔁 Sample Workflow
+✅ Signup
+json
+Copy
+Edit
+POST /signup
+{
+  "username": "rayyan123",
+  "password": "mypassword",
+  "role": "ops"
+}
+✅ Login
+json
+Copy
+Edit
+POST /login
+{
+  "username": "rayyan123",
+  "password": "mypassword",
+  "role": "ops"
+}
+Response:
+
+json
+Copy
+Edit
+{
+  "message": "Login successful",
+  "token": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+Use this token in the Authorize section or as a header:
+
+makefile
+Copy
+Edit
+Authorization: Bearer <token>
+✅ Download Link Generator (Python)
+Use this snippet to generate encrypted download links:
+
+python
+Copy
+Edit
+import base64
+def generate_download_link(filename):
+    encoded = base64.urlsafe_b64encode(filename.encode()).decode().rstrip("=")
+    return f"http://127.0.0.1:8000/download/{encoded}"
+📦 Folder Structure
+bash
+Copy
+Edit
+ez-backend-project/
+│
+├── main.py                # FastAPI app
+├── uploads/               # Folder for storing uploaded files
+├── venv/                  # Virtual environment (ignored in GitHub)
+└── README.md              # This file
 
