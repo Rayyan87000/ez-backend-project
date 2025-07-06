@@ -1,0 +1,81 @@
+{
+	"info": {
+		"_postman_id": "465d8224-c3b5-47bc-8f29-b06a9c543302",
+		"name": "Secure File Sharing API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46367282",
+		"_collection_link": "https://rayyan-6646276.postman.co/workspace/Rayyan's-Workspace~6613def3-0c06-49e5-8cd8-b469262b6cd1/collection/46367282-465d8224-c3b5-47bc-8f29-b06a9c543302?action=share&source=collection_link&creator=46367282"
+	},
+	"item": [
+		{
+			"name": "Login (Ops User)",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Fil",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization\t",
+						"value": "Bearer ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/upload",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Uploaded Files",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer c17bc60f-6b44-4e4d-ad9c-0d3d58f834c4",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:8000/files",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"files"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
