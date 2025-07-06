@@ -28,28 +28,33 @@ source venv/bin/activate
 
 
  3. Install Dependencies
+ ```bash
  pip install -r requirements.txt
-
+```
 Or manually:
+```bash
 pip install fastapi uvicorn python-multipart passlib[bcrypt] python-dotenv
-
+```
 4. Create .env File (Optional for Email)
 Create a .env file in the root directory with the following content:
+```bash
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
 SMTP_PASS=your_app_password
 SMTP_SENDER=your_email@gmail.com
-
+```
 If you don’t provide SMTP credentials, the app will simulate email by printing links in the terminal.
 
 ✅ 5. Create Uploads Folder
 If not already present:
+```bash
 mkdir uploads
-
+```
 6. Run the Server
+```bash
 uvicorn main:app --reload
-
+```
 Then open your browser:
 http://127.0.0.1:8000/docs
 Use the Swagger UI to test the APIs.
