@@ -4,6 +4,8 @@ A FastAPI-based secure backend for file upload, listing, and download with token
 🔐 FastAPI Secure File Upload Backend
 A secure backend system built using FastAPI that allows file uploading, listing, and encrypted downloading with token-based authentication and role-based access control.
 
+
+
 🚀 Features
 🧾 User Signup & Login with hashed passwords
 
@@ -146,3 +148,24 @@ ez-backend-project/
 ├── venv/                  # Virtual environment (ignored in GitHub)
 └── README.md              # This file
 
+
+## 🔁 API Testing with Postman
+
+This project includes a ready-to-use Postman collection for testing all endpoints.
+
+### 📦 Import Instructions
+
+1. Open Postman
+2. Click `Import` (top left)
+3. Choose `SecureFileSharing.postman_collection.json` from the project folder
+4. Use the requests under the collection to test:
+   - `Sign Up`
+   - `Verify Email`
+   - `Login`
+   - `Upload File`
+   - `List All Uploaded Files`
+   - `Download File`
+
+### 🔐 Auth Token
+
+Make sure to copy the token returned from `/login` and add it in the `Authorization` header as:
